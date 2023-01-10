@@ -31,8 +31,6 @@ public class obstManager : MonoBehaviour
 
     public Queue <obst> obstacleQueue = new Queue <obst>();
 
-    // bool canBuild = true;
-
     void Awake()
     {   
         for (int j = 0; j < 5; j++)
@@ -42,7 +40,6 @@ public class obstManager : MonoBehaviour
         }
 
         startZ -= distanceBetweenBlock;
-
     }
 
     void Start()
@@ -52,16 +49,6 @@ public class obstManager : MonoBehaviour
         // Increase the obstacle speed gradually over time
         InvokeRepeating("IncreaseObstacleSpeed", initialDelay, spawnInterval);
     }
-
-
-    void Update()
-    {
-        // if (obstacleQueue.Peek().transform.position.z <= 0 && canBuild) 
-        // {
-        //     instantiateBlocks();
-        //     canBuild = false;
-        // }
-    } 
 
     void SpawnObstacle()
     {
@@ -75,8 +62,7 @@ public class obstManager : MonoBehaviour
     void IncreaseObstacleSpeed()
     {
         // Increase the obstacle speed by the specified rate
-        obstacleSpeed += speedIncreaseRate;   
-        
+        obstacleSpeed += speedIncreaseRate;      
     }
     
     public void instantiateBlocks()

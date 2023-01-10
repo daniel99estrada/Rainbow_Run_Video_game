@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class detectCollision : MonoBehaviour
 {   
     public Renderer playerRenderer;
-    public float jumpForce = 0.4f;
+    // float jumpForce = 0.4f;
     public float jumpDuration = 0.4f;
 
     public GameObject CoinManager;
@@ -35,7 +35,7 @@ public class detectCollision : MonoBehaviour
             playerRenderer.material.SetColor("_Color", collisionRenderer.material.color);
 
             //Make the player jump.
-            Jump();
+            Jump(2);
 
             //Display Coin score.
             // coinText.ShowText();
@@ -47,7 +47,7 @@ public class detectCollision : MonoBehaviour
             return;
         }
 
-        CoinManagerScript.coinScore = 0;
+        CoinManagerScript.streakCount = 0;
 
         //Check if the right obstacle was traversed.
         if (collisionRenderer.material.color != playerRenderer.material.color)
@@ -58,7 +58,7 @@ public class detectCollision : MonoBehaviour
         //destroyEffect
         collision.gameObject.transform.parent.gameObject.GetComponent<obst>().DestroyEffect();
 
-        Jump();
+        Jump(5);
 
         //Play a sound effect.
         SoundEffects.playSoundEffect();
@@ -69,7 +69,7 @@ public class detectCollision : MonoBehaviour
         ObstacleColors.setPlayerColor();
     }
 
-    void Jump()
+    void Jump(float jumpForce)
     {
         GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         Invoke("StopJump", jumpDuration);

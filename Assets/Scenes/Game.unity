@@ -159,11 +159,11 @@ MonoBehaviour:
   height: 0.7
   offset: 15
   totalLanes: 5
-  coinScore: 0
-  scoreIncrement: 5
   LastCollectedCoin: {fileID: 0}
   lastCoinOnStreak: {fileID: 0}
   head: {fileID: 0}
+  coinScore: 0
+  streakCount: 0
 --- !u!4 &121486534
 Transform:
   m_ObjectHideFlags: 0
@@ -722,7 +722,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &733240143
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1374,7 +1374,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1519693461}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1531,6 +1531,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3625437998971013969, guid: a512f72323158ff4185297cc7e0a0dca, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625437998971013969, guid: a512f72323158ff4185297cc7e0a0dca, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: f1e7dca00afd43a48a29fcc28a77428c, type: 2}
@@ -1601,7 +1605,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8336528612306091209, guid: 2c999e733c3ee534a95b94338cb62740, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8336528612306091209, guid: 2c999e733c3ee534a95b94338cb62740, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1641,7 +1645,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8336528612306091211, guid: 2c999e733c3ee534a95b94338cb62740, type: 3}
       propertyPath: jumpForce
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8336528612306091211, guid: 2c999e733c3ee534a95b94338cb62740, type: 3}
       propertyPath: jumpDuration

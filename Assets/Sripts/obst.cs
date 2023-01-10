@@ -20,6 +20,8 @@ public class obst : MonoBehaviour
     private Player playerScript;
     private int WIDTH;
 
+
+
     bool canBuild = true;
 
     void Awake()
@@ -63,22 +65,35 @@ public class obst : MonoBehaviour
 
         for (var j = 0; j < divisions; j++)
         {   
+            Vector3 position;
+            GameObject obst;
+
             //Set the position.
             float x = WIDTH/divisions * j + (WIDTH/divisions)/2 - WIDTH/2;
-            Vector3 position = new Vector3(x, prefab.transform.localScale.y/2, startZ);
 
-            //Instantiate prefab
-            GameObject obst = Instantiate(prefab, position, Quaternion.identity);
+            for (int i = 0; i < 2; i++)
+            {
+                if (i == 0)
+                {
+                    position = new Vector3(x, prefab.transform.localScale.y/2, startZ);
+                    obst = Instantiate(prefab, position, Quaternion.identity);
+                    obst.transform.localScale = new Vector3(WIDTH/divisions, prefab.transform.localScale.y, prefab.transform.localScale.z);
+                }
+                else
+                {
+                    position = new Vector3(x, -0.5f, startZ - obstacleManager.distanceBetweenBlock/2 -0.5f);
+                    obst = Instantiate(prefab, position, Quaternion.identity);
+                    obst.transform.localScale = new Vector3(WIDTH/divisions, prefab.transform.localScale.z, obstacleManager.distanceBetweenBlock);
+                    obst.GetComponent<Collider>().enabled = false;
+                } 
 
-            //Assign a color.
-            var cubeRenderer = obst.GetComponent<Renderer>();
-            cubeRenderer.material.SetColor("_Color", colorPalette[index[j]]);
-
-            //Set the scale.
-            obst.transform.localScale = new Vector3(WIDTH/divisions, prefab.transform.localScale.y, prefab.transform.localScale.z);
-            
-            //Set parent.
-            obst.transform.parent = this.transform;
+                //Assign a color.
+                var cubeRenderer = obst.GetComponent<Renderer>();
+                cubeRenderer.material.SetColor("_Color", colorPalette[index[j]]);
+                
+                // //Set parent.
+                obst.transform.parent = this.transform;
+            }
         }   
     }
 

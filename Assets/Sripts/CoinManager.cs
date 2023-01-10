@@ -8,7 +8,7 @@ public class CoinManager : MonoBehaviour
     public GameObject coinUIPrefab;
     public int minCoins;
     public int maxCoins;
-    private Vector3 position;
+    // private Vector3 position;
     public float height;
     public float offset;
 
@@ -22,13 +22,14 @@ public class CoinManager : MonoBehaviour
     private obstManager obstacleManager;
     private GameObject obstacle;
 
-    public int coinScore;
-    public int scoreIncrement;
-
     public LinkedList<GameObject> coinLinkedList = new LinkedList<GameObject>();
     public GameObject LastCollectedCoin;
     public GameObject lastCoinOnStreak;
     public GameObject head;
+
+    public int coinScore;
+    int[] coinScores = {1, 3, 5, 11, 15, 25, 50, 100, 300, 500, 1000};
+    public int streakCount;
 
     void Awake ()
     {   
@@ -73,12 +74,14 @@ public class CoinManager : MonoBehaviour
     {   
         if (LastCollectedCoin.GetInstanceID() == getPreviousCoin(Coin).GetInstanceID())
         {   
-            coinScore += Random.Range(1,7);
+            streakCount += 1;
         }
         else
         {
-            coinScore = 1;
+            streakCount = 0;
         }
+        
+        coinScore = coinScores[streakCount];
 
         ScoreUI.score += coinScore;
 
