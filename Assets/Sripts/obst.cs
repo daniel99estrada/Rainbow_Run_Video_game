@@ -35,7 +35,6 @@ public class obst : MonoBehaviour
 
         divisions = obstacleManager.divisions;
         startZ = obstacleManager.startZ;
-        speed = obstacleManager.speed;
         WIDTH = Ground.width;
 
         instantiate();
@@ -85,6 +84,7 @@ public class obst : MonoBehaviour
                     obst = Instantiate(prefab, position, Quaternion.identity);
                     obst.transform.localScale = new Vector3(WIDTH/divisions, prefab.transform.localScale.z, obstacleManager.distanceBetweenBlock);
                     obst.GetComponent<Collider>().enabled = false;
+                    obst.tag = "Ground";
                 } 
 
                 //Assign a color.
@@ -99,7 +99,7 @@ public class obst : MonoBehaviour
 
     public void move()
     {   
-        speed = obstacleManager.obstacleSpeed;
+        speed = obstManager.speed;
 
         this.transform.Translate(Vector3.back * speed * Time.deltaTime, Space.World);
     }
@@ -134,7 +134,7 @@ public class obst : MonoBehaviour
     public void DestroyEffect()
     {
         for (int i=0; i< transform.childCount; i++)
-        {
+        {   
             GameObject child = transform.GetChild(i).gameObject;
 
             Vector3 position  = new Vector3(child.transform.position.x, effectPositionY, child.transform.position.z);
@@ -146,8 +146,11 @@ public class obst : MonoBehaviour
             effect.GetComponent<Renderer>().material.color = child.GetComponent<Renderer>().material.GetColor("_Color");
 
             Destroy(effect, 5f);
-            
-            Destroy(child);
+
+            if (child.tag != "Ground")
+            {
+                Destroy(child);
+            }
         }
 
         obstacleManager.obstacleQueue.Dequeue();

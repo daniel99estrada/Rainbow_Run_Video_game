@@ -20,7 +20,7 @@ public class SetColor : MonoBehaviour
 
     void move ()
     {   
-        speed = obstacleManager.speed;
+        speed = obstManager.speed;
 
         this.transform.Translate(Vector3.back * speed * Time.deltaTime, Space.World);
     }

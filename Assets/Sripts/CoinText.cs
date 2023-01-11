@@ -6,8 +6,8 @@ using TMPro;
 public class CoinText : MonoBehaviour
 {   
     public float textDuration;
-    public float y;
-    public float z;
+    public float yOffest;
+    public float zOffest;
     
     GameObject player;
     TextMeshPro textMeshPro;
@@ -28,7 +28,7 @@ public class CoinText : MonoBehaviour
 
     public void ShowText()
     {   
-        transform.position = new Vector3(player.transform.position.x, y, z);
+        transform.position = new Vector3(player.transform.position.x, player.transform.position.y + yOffest, player.transform.position.z + zOffest);
 
         textMeshPro.text = "+" + CoinManagerScript.coinScore.ToString();
 

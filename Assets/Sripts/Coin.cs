@@ -36,7 +36,7 @@ public class Coin : MonoBehaviour
 
     public void move ()
     {   
-        speed = obstacleManager.obstacleSpeed;
+        speed = obstManager.speed;
 
         this.transform.Translate(Vector3.back * speed * Time.deltaTime, Space.World);
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class obstManager : MonoBehaviour
 {   
-    public float speed;
+    public static float speed;
 
     public int startZ = 100;
     public int divisions = 5;
@@ -33,7 +33,7 @@ public class obstManager : MonoBehaviour
 
     void Awake()
     {   
-        for (int j = 0; j < 5; j++)
+        for (int j = 0; j < 3; j++)
         {
             instantiateBlocks();
             startZ += distanceBetweenBlock;
