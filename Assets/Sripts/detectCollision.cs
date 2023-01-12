@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class detectCollision : MonoBehaviour
 {   
     public Renderer playerRenderer;
@@ -52,7 +53,8 @@ public class detectCollision : MonoBehaviour
         //Check if the right obstacle was traversed.
         if (collisionRenderer.material.color != playerRenderer.material.color)
         {
-            SceneManager.LoadScene("Game");
+            GameManager.GameOver();
+            // SceneManager.LoadScene("Game");
         }
         
         //destroyEffect
