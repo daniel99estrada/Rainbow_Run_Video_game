@@ -38,9 +38,6 @@ public class detectCollision : MonoBehaviour
             //Make the player jump.
             Jump(2);
 
-            //Display Coin score.
-            // coinText.ShowText();
-
             CoinManagerScript.checkForStreak(collision.gameObject);
 
             CoinManagerScript.DisplayText();
@@ -54,7 +51,6 @@ public class detectCollision : MonoBehaviour
         if (collisionRenderer.material.color != playerRenderer.material.color)
         {
             GameManager.GameOver();
-            // SceneManager.LoadScene("Game");
         }
         
         //destroyEffect
@@ -64,8 +60,6 @@ public class detectCollision : MonoBehaviour
 
         //Play a sound effect.
         SoundEffects.playSoundEffect();
-        
-        obstManager.totalPassed += 1;
 
         //Set the player's color.
         ObstacleColors.setPlayerColor();
