@@ -2,74 +2,61 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro;
 
 public class GameManager : MonoBehaviour
 {   
     public static bool gameOver;
-    bool GameInProgress; 
-
-    public static Canvas GameOverUI;
-    public static Canvas StartUI;
-    public static Canvas ScoreUI;
+    public static bool gameInProgress; 
 
     void Awake()
     {
-        StartUI = GameObject.Find("StartUI").GetComponent<Canvas>();
-        GameOverUI = GameObject.Find("GameOverUI").GetComponent<Canvas>();
-        ScoreUI = GameObject.Find("ScoreUI").GetComponent<Canvas>();
-
         obstManager.speed = 0;
         gameOver = false;
-        GameInProgress = false; 
+        gameInProgress = false; 
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        SetStartScreenUI();
+        UIManager.SetStartScreenUI();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow) && !GameInProgress)
-        {   
-            obstManager.speed = obstManager.initialSpeed;
+        if (!gameInProgress)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow) || SwipeManager.tap)
+            {   
+                gameInProgress = true;
 
-            GameInProgress = true;
+                //set objects in motion
+                obstManager.speed = obstManager.initialSpeed;
 
-            SetInGameUI ();
-
+                UIManager.SetInGameUI ();
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow)&& gameOver)
-        {
-            SceneManager.LoadScene("Game");
+
+        if (gameOver)
+        {   
+            if (Input.GetKeyDown(KeyCode.DownArrow) || SwipeManager.tap)
+            {
+                //reset Game
+                SceneManager.LoadScene("Game");
+            }
         }
     }
 
     public static void GameOver()
     {   
-        gameOver = true;
-        obstManager.speed = 0;
-
-        GameOverUI.enabled = true;
-        ScoreUI.enabled = false;
+        UIManager.SetGameOverUI();
 
         GameObject.Find("GameOverUI").GetComponent<GameOverAnimationManager>().playAnimations();
+
+        gameOver = true;
+        obstManager.speed = 0;
     } 
 
-    void SetStartScreenUI()
-    {
-        StartUI.enabled = true;
-        ScoreUI.enabled = false;
-        GameOverUI.enabled = false;
-    }
 
-    void SetInGameUI ()
-    {
-        StartUI.enabled = false;
-        ScoreUI.enabled = true;
-    }
 }

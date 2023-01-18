@@ -23,7 +23,8 @@ public class detectCollision : MonoBehaviour
     {   
 
         Renderer collisionRenderer = collision.gameObject.GetComponent<Renderer>();
-
+        
+        # region Coin Collision
         if (collision.gameObject.tag == "Coin")
         {      
             //Destroy coin.
@@ -44,25 +45,27 @@ public class detectCollision : MonoBehaviour
 
             return;
         }
-
-        CoinManagerScript.streakCount = 0;
+        #endregion
 
         //Check if the right obstacle was traversed.
         if (collisionRenderer.material.color != playerRenderer.material.color)
         {
             GameManager.GameOver();
         }
-        
-        //destroyEffect
+
+        //Destroy Obstacles
         collision.gameObject.transform.parent.gameObject.GetComponent<obst>().DestroyEffect();
 
-        Jump(5);
-
-        //Play a sound effect.
+        //Play a sound effect
         SoundEffects.playSoundEffect();
+
+        //Jump Effect
+        Jump(5);
 
         //Set the player's color.
         ObstacleColors.setPlayerColor();
+
+        CoinManagerScript.streakCount = 0;
     }
 
     void Jump(float jumpForce)

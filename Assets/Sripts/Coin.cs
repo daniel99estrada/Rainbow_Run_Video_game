@@ -36,6 +36,8 @@ public class Coin : MonoBehaviour
 
     public void move ()
     {   
+        if (GameManager.gameOver || !GameManager.gameInProgress) return;
+
         speed = obstManager.speed;
 
         this.transform.Translate(Vector3.back * speed * Time.deltaTime, Space.World);
@@ -45,7 +47,7 @@ public class Coin : MonoBehaviour
     {   
         if (this.transform.position.z < player.transform.position.z)
         {   
-            speed = speed * 1.1f;
+            // speed = speed * 1.1f;
             Destroy(this.gameObject, (2.0f));
         }
     }

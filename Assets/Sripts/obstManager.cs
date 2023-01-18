@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class obstManager : MonoBehaviour
 {   
-    public static float speed;
+
+    public static float initialSpeed = 18;
 
     public int startZ = 100;
     public int divisions = 5;
@@ -16,10 +17,7 @@ public class obstManager : MonoBehaviour
     // Prefab for the obstacle
     public GameObject obstaclePrefab;
 
-    public float spawnInterval;
-
-    // Speed at which the obstacles move
-    public float obstacleSpeed = 16.0f;
+    public float speedIncreaseInterval;
 
     // Speed increase rate per second
     public float speedIncreaseRate;
@@ -29,10 +27,18 @@ public class obstManager : MonoBehaviour
 
     public int distanceBetweenBlock = 100;
 
+    public static float speed;
+
     public Queue <obst> obstacleQueue = new Queue <obst>();
+
+    GameObject coinManager;
+    CoinManager CoinManager;
 
     void Awake()
     {   
+        coinManager = GameObject.Find("CoinManager");
+        CoinManager = coinManager.GetComponent<CoinManager>();
+
         for (int j = 0; j < 3; j++)
         {
             instantiateBlocks();
@@ -47,36 +53,22 @@ public class obstManager : MonoBehaviour
         totalPassed = 0;
 
         // Increase the obstacle speed gradually over time
-        InvokeRepeating("IncreaseObstacleSpeed", initialDelay, spawnInterval);
-    }
-
-    void SpawnObstacle()
-    {
-        // Instantiate the obstacle at the spawner position
-        GameObject obstacle = Instantiate(obstaclePrefab, transform.position, Quaternion.identity);
-
-        // Set the obstacle's speed
-        obstacle.GetComponent<obst>().speed = obstacleSpeed;
+        InvokeRepeating("IncreaseObstacleSpeed", initialDelay, speedIncreaseInterval);
     }
 
     void IncreaseObstacleSpeed()
     {
         // Increase the obstacle speed by the specified rate
-        obstacleSpeed += speedIncreaseRate;      
+        speed += speedIncreaseRate;      
     }
     
     public void instantiateBlocks()
     {
-        GameObject o = Instantiate(rainbowBlock, new Vector3(0, 0f, startZ), Quaternion.identity);
-
-        GameObject coinManager = GameObject.Find("CoinManager");
-        CoinManager CoinManager = coinManager.GetComponent<CoinManager>();
+        Instantiate(rainbowBlock, new Vector3(0, 0f, startZ), Quaternion.identity);
 
         CoinManager.InstantiateCoins();
-         
-        o.GetComponent<obst>().speed = obstacleSpeed;
 
-        //Remove color to PalletteQueue
+        //Remove color pallette from PalletteQueue
         ObstacleColors.paletteQueue.Dequeue();
 
         //Add a new color to PalletteQueue

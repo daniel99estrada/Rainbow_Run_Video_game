@@ -27,27 +27,20 @@ public class Player : MonoBehaviour
         currentLane = numLanes / 2; // Start in the middle lane
         targetXPos = CalculateLaneXPos(currentLane);
         rb = GetComponent<Rigidbody>();
-
-        GameObject text = new GameObject();
-        TextMeshPro t = text.AddComponent<TextMeshPro>();
-        t.text = "10";
-        t.fontSize = 5;
-        t.transform.localPosition += new Vector3(-0f, 1f, 0f);
-
     }
 
     void Update()
     {
         // Check if the player is allowed to move
         if (canMove)
-        {
+        {   
             // Check for input to move left or right
-            if (Input.GetKeyDown(KeyCode.LeftArrow) && currentLane > 0)
+            if ((Input.GetKeyDown(KeyCode.LeftArrow) || SwipeManager.swipeLeft) && currentLane > 0)
             {
                 currentLane--;
                 targetXPos = CalculateLaneXPos(currentLane);
             }
-            else if (Input.GetKeyDown(KeyCode.RightArrow) && currentLane < numLanes - 1)
+            else if ((Input.GetKeyDown(KeyCode.RightArrow) || SwipeManager.swipeRight) && currentLane < numLanes - 1)
             {
                 currentLane++;
                 targetXPos = CalculateLaneXPos(currentLane);

@@ -6,9 +6,9 @@ public class CoinManager : MonoBehaviour
 {   
     public GameObject coinPrefab;
     public GameObject coinUIPrefab;
+    public GameObject megaCoin;
     public int minCoins;
     public int maxCoins;
-    // private Vector3 position;
     public float height;
     public float offset;
 
@@ -64,6 +64,7 @@ public class CoinManager : MonoBehaviour
             addToCoinLinkedList(coin);
         }
     }
+
 
     public void DisplayText()
     {   
