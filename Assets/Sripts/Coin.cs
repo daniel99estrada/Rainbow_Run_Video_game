@@ -15,7 +15,7 @@ public class Coin : MonoBehaviour
     {
         //Assign a color.
         var coinRenderer = GetComponent<Renderer>();
-        coinRenderer.material.SetColor("_Color", ObstacleColors.paletteQueue.Peek()[Random.Range(0,5)]);
+        coinRenderer.material.SetColor("_Color", ColorManager.paletteQueue.Peek()[Random.Range(0,5)]);
     }
 
     // Start is called before the first frame update

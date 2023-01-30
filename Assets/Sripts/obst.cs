@@ -58,9 +58,9 @@ public class obst : MonoBehaviour
     public void instantiate()
     {   
 
-        Color[] colorPalette = ObstacleColors.paletteQueue.Peek();
+        Color[] colorPalette = ColorManager.paletteQueue.Peek();
 
-        List<int> index = new List<int>(ObstacleColors.randomOrder(5, 5));
+        List<int> index = new List<int>(ColorManager.randomOrder(5, 5));
 
         for (var j = 0; j < divisions; j++)
         {   

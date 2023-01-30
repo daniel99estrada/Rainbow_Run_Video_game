@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObstacleColors : MonoBehaviour
+public class ColorManager : MonoBehaviour
 {   
     public static GameObject player;
 
@@ -52,9 +52,10 @@ public class ObstacleColors : MonoBehaviour
     public static Queue <Color> colorQueue;
     public static Queue <Color[]> paletteQueue;
 
-    public static int changeColorRate = 3;
+    // Variables to Pick a Random Palette.
     public static int count = 0;
-    public static int index = 0; 
+    public static int index = 0;
+
 
     void Awake()
     {   
@@ -92,7 +93,7 @@ public class ObstacleColors : MonoBehaviour
 
     void SetPaletteQueue ()
     {   
-        for (int j = 0; j < 5; j++)
+        for (int j = 0; j < 20; j++)
         {
             UpdatePaletteQueue();
         }
@@ -100,10 +101,10 @@ public class ObstacleColors : MonoBehaviour
 
     public static void UpdatePaletteQueue ()
     {   
+        index = PickAPalette();
+
         Color[] palette = new Color[5];
 
-        index = Random.Range(0, allPalettes.Count);
-    
         for (int i = 0; i < allPalettes[1].Count; i++)
         {
             palette[i] = allPalettes[index][i];
@@ -114,6 +115,16 @@ public class ObstacleColors : MonoBehaviour
         paletteQueue.Enqueue(palette);
 
         colorQueue.Enqueue(playerColor);
+    }
+
+    public static int PickAPalette()
+    {
+
+        index = count % allPalettes.Count;
+
+        count += Random.Range(1, 3);;
+
+        return index;
     }
 
     public static Color setRGBtoColor(float _r, float _g, float _b)
@@ -146,21 +157,3 @@ public class ObstacleColors : MonoBehaviour
         return listNumbers;
     }
 }
-
-    //   string[] hexColors = new string[] { "a393bf", "9882ac", "73648a", "453750", "0c0910" };
-	// 	int[][] rgbValues = new int[hexColors.Length][];
-
-    //   for (int i = 0; i < hexColors.Length; i++)
-    //   {
-    //       rgbValues[i] = new int[3];
-    //       rgbValues[i][0] = Convert.ToInt32(hexColors[i].Substring(0, 2), 16);
-    //       rgbValues[i][1] = Convert.ToInt32(hexColors[i].Substring(2, 2), 16);
-    //       rgbValues[i][2] = Convert.ToInt32(hexColors[i].Substring(4, 2), 16);
-    //   };
-    //   string output = "{" + string.Join("}, {", rgbValues.Select(x => string.Join(", ", x))) + "}";
-	// 	Console.WriteLine(output);
-
-    // "91ac86","a6bba0","cce18e","d8f4cd","c2ffc8"
-    // "f9e0d9","e6dbd0","7d6167","754f5b","5d4954"
-    // ["7a918d","93b1a7","99c2a2","c5edac","dbfeb8"]
-    // ["d1b1c8","b1b7d1","9b9fb5","8c7284","7a6174"]

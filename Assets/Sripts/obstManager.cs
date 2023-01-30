@@ -69,10 +69,10 @@ public class obstManager : MonoBehaviour
         CoinManager.InstantiateCoins();
 
         //Remove color pallette from PalletteQueue
-        ObstacleColors.paletteQueue.Dequeue();
+        ColorManager.paletteQueue.Dequeue();
 
         //Add a new color to PalletteQueue
-        ObstacleColors.UpdatePaletteQueue();
+        ColorManager.UpdatePaletteQueue();
     }
 }
  

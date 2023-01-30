@@ -1,84 +1,81 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-
-public class detectCollision : MonoBehaviour
-{   
+public class DetectCollision : MonoBehaviour
+{
     public Renderer playerRenderer;
-    // float jumpForce = 0.4f;
     public float jumpDuration = 0.4f;
+    public CoinManager coinManagerScript;
 
-    public GameObject CoinManager;
-    public CoinManager CoinManagerScript;
+    public GameObject detroyEffect;
 
-    void Awake ()
+    private void Awake()
     {
-        CoinManager = GameObject.Find("CoinManager");
-        CoinManagerScript = CoinManager.GetComponent<CoinManager>();
+        coinManagerScript = GameObject.Find("CoinManager").GetComponent<CoinManager>();
     }
 
-    void OnTriggerEnter(Collider collision)
-    {   
-
+    private void OnTriggerEnter(Collider collision)
+    {
         Renderer collisionRenderer = collision.gameObject.GetComponent<Renderer>();
-        
-        # region Coin Collision
-        if (collision.gameObject.tag == "Coin")
-        {      
-            //Destroy coin.
-            Destroy(collision.gameObject);
 
-            //Play sound effect
-            SoundEffects.playSoundEffect();
-
-            //Set the Player's color to that of the coin.
-            playerRenderer.material.SetColor("_Color", collisionRenderer.material.color);
-
-            //Make the player jump.
-            Jump(2);
-
-            CoinManagerScript.checkForStreak(collision.gameObject);
-
-            CoinManagerScript.DisplayText();
-
+        if (collision.gameObject.CompareTag("Coin"))
+        {
+            HandleCoinCollision(collision, collisionRenderer);
             return;
         }
-        #endregion
-
-        //Check if the right obstacle was traversed.
-        if (collisionRenderer.material.color != playerRenderer.material.color)
-        {
+        else if (collisionRenderer.material.color != playerRenderer.material.color)
+        {   
+            DestroyPlayer();
             GameManager.GameOver();
         }
-
-        //Destroy Obstacles
-        collision.gameObject.transform.parent.gameObject.GetComponent<obst>().DestroyEffect();
-
-        //Play a sound effect
-        SoundEffects.playSoundEffect();
-
-        //Jump Effect
-        Jump(5);
-
-        //Set the player's color.
-        ObstacleColors.setPlayerColor();
-
-        CoinManagerScript.streakCount = 0;
+        else
+        {
+            HandleObstacleCollision(collision, collisionRenderer);
+        }
     }
 
-    void Jump(float jumpForce)
+    private void HandleCoinCollision(Collider coin, Renderer coinRenderer)
+    {
+        Destroy(coin.gameObject);
+        SoundEffects.playSoundEffect();
+        playerRenderer.material.SetColor("_Color", coinRenderer.material.color);
+        Jump(2);
+        coinManagerScript.CheckForStreak(coin.gameObject);
+        coinManagerScript.DisplayText();
+    }
+
+    private void HandleObstacleCollision(Collider obstacle, Renderer obstacleRenderer)
+    {
+        obstacle.gameObject.transform.parent.gameObject.GetComponent<obst>().DestroyEffect();
+        SoundEffects.playSoundEffect();
+        Jump(5);
+        ColorManager.setPlayerColor();
+        coinManagerScript.ResetStreak();
+    }
+
+    private void Jump(float jumpForce)
     {
         GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         Invoke("StopJump", jumpDuration);
     }
 
-    void StopJump()
+    private void StopJump()
     {
         GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
+
+    private void DestroyPlayer()
+    {   
+        // Destroy(this.gameObject);
+
+        Vector3 position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z + 2);
+        Jump(6);
+
+        //Instantiate Destrou effect
+        GameObject effect = Instantiate(detroyEffect, transform.position, Quaternion.identity);
+
+        //Change the Color of the effect to that of the obstacle
+        effect.GetComponent<Renderer>().material.color = GetComponent<Renderer>().material.GetColor("_Color");       
+    }
 }
-
-
-

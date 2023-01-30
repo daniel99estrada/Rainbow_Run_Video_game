@@ -29,7 +29,7 @@ public class CoinManager : MonoBehaviour
 
     public int coinScore;
     int[] coinScores = {1, 3, 5, 11, 15, 25, 50, 100, 300, 500, 1000};
-    public int streakCount;
+    public static int streakCount;
 
     void Awake ()
     {   
@@ -65,15 +65,14 @@ public class CoinManager : MonoBehaviour
         }
     }
 
-
     public void DisplayText()
     {   
         Instantiate(coinUIPrefab, new Vector3(0f,0f,0f), Quaternion.identity);
     }
 
-    public void checkForStreak(GameObject Coin)
+    public void CheckForStreak(GameObject coin)
     {   
-        if (LastCollectedCoin.GetInstanceID() == getPreviousCoin(Coin).GetInstanceID())
+        if (LastCollectedCoin.GetInstanceID() == getPreviousCoin(coin).GetInstanceID())
         {   
             streakCount += 1;
         }
@@ -86,7 +85,7 @@ public class CoinManager : MonoBehaviour
 
         ScoreUI.score += coinScore;
 
-        LastCollectedCoin = Coin;
+        LastCollectedCoin = coin;
     }
 
     public void addToCoinLinkedList(GameObject coin)
@@ -107,4 +106,11 @@ public class CoinManager : MonoBehaviour
         Coin coin = Coin.GetComponent<Coin>();
         return coin.previous;
     }
+
+    public void ResetStreak()
+    {
+        streakCount = 0;
+    }
 }
+
+   
