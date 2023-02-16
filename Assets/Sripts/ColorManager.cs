@@ -156,4 +156,10 @@ public class ColorManager : MonoBehaviour
 
         return listNumbers;
     }
+
+    public static void ClearQueues()
+    {
+        colorQueue.Clear();
+        paletteQueue.Clear();
+    }
 }

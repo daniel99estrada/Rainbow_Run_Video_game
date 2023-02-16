@@ -80,7 +80,7 @@ public class obst : MonoBehaviour
                 }
                 else
                 {
-                    position = new Vector3(x, -0.5f, startZ - obstacleManager.distanceBetweenBlock/2 -0.5f);
+                    position = new Vector3(x, -0.5f, startZ - obstacleManager.distanceBetweenBlock/2 );
                     obst = Instantiate(prefab, position, Quaternion.identity);
                     obst.transform.localScale = new Vector3(WIDTH/divisions, prefab.transform.localScale.z, obstacleManager.distanceBetweenBlock);
                     obst.GetComponent<Collider>().enabled = false;
@@ -110,7 +110,6 @@ public class obst : MonoBehaviour
     {   
         if (this.transform.position.z < player.transform.position.z)
         {   
-            // speed = speed * 1.1f;
             Destroy(this.gameObject, (2.0f));
         }
     }
@@ -130,7 +129,6 @@ public class obst : MonoBehaviour
                 playerScript.canMove = true;
             }
         }
-
     }
 
     public void DestroyEffect()
@@ -154,7 +152,6 @@ public class obst : MonoBehaviour
                 Destroy(child);
             }
         }
-
         obstacleManager.obstacleQueue.Dequeue();
     }
 }

@@ -41,8 +41,7 @@ public class DetectCollision : MonoBehaviour
         SoundEffects.playSoundEffect();
         playerRenderer.material.SetColor("_Color", coinRenderer.material.color);
         Jump(2);
-        coinManagerScript.CheckForStreak(coin.gameObject);
-        coinManagerScript.DisplayText();
+        coinManagerScript.DisplayText(coin.gameObject);
     }
 
     private void HandleObstacleCollision(Collider obstacle, Renderer obstacleRenderer)
@@ -72,7 +71,7 @@ public class DetectCollision : MonoBehaviour
         Vector3 position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z + 2);
         Jump(6);
 
-        //Instantiate Destrou effect
+        //Instantiate Destroy effect
         GameObject effect = Instantiate(detroyEffect, transform.position, Quaternion.identity);
 
         //Change the Color of the effect to that of the obstacle

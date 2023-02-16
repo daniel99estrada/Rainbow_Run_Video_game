@@ -26,14 +26,17 @@ public class CoinManager : MonoBehaviour
     public GameObject LastCollectedCoin;
     public GameObject lastCoinOnStreak;
     public GameObject head;
+    bool reset = true;
 
     public int coinScore;
-    int[] coinScores = {1, 3, 5, 11, 15, 25, 50, 100, 300, 500, 1000};
+    int[] coinScores = {1, 3, 5, 11, 15, 25, 50, 100, 300, 500, 1000, 2000, 3000, 4000};
     public static int streakCount;
 
     void Awake ()
     {   
+        streakCount = 0;
         laneWidth = Ground.width;
+        coinLinkedList.Clear();
 
         obstacle = GameObject.Find("ObstacleManager");
         obstacleManager = obstacle.GetComponent<obstManager>();
@@ -65,14 +68,16 @@ public class CoinManager : MonoBehaviour
         }
     }
 
-    public void DisplayText()
+    public void DisplayText(GameObject coin)
     {   
+        CheckForStreak(coin);
+        SetValue();
         Instantiate(coinUIPrefab, new Vector3(0f,0f,0f), Quaternion.identity);
     }
 
     public void CheckForStreak(GameObject coin)
     {   
-        if (LastCollectedCoin.GetInstanceID() == getPreviousCoin(coin).GetInstanceID())
+        if (LastCollectedCoin.GetInstanceID() == getPreviousCoin(coin).GetInstanceID() && !reset)
         {   
             streakCount += 1;
         }
@@ -80,12 +85,20 @@ public class CoinManager : MonoBehaviour
         {
             streakCount = 0;
         }
-        
-        coinScore = coinScores[streakCount];
-
-        ScoreUI.score += coinScore;
-
         LastCollectedCoin = coin;
+        reset = false;
+    }
+
+    public void ResetStreak()
+    {
+        streakCount = 0;
+        reset = true;
+    }
+
+    public void SetValue()
+    {   
+        coinScore = coinScores[streakCount];
+        ScoreUI.score += coinScore;
     }
 
     public void addToCoinLinkedList(GameObject coin)
@@ -105,11 +118,6 @@ public class CoinManager : MonoBehaviour
     {
         Coin coin = Coin.GetComponent<Coin>();
         return coin.previous;
-    }
-
-    public void ResetStreak()
-    {
-        streakCount = 0;
     }
 }
 
