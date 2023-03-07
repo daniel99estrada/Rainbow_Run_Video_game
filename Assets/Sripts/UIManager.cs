@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     // public static Canvas GameOverUI;
     public static Canvas StartUI;
     public static Canvas ScoreUI;
+    
 
     void Awake()
     {

@@ -53,12 +53,14 @@ public class ColorManager : MonoBehaviour
     public static Queue <Color[]> paletteQueue;
 
     // Variables to Pick a Random Palette.
-    public static int count = 0;
-    public static int index = 0;
+    public static int count;
+    public static int index;
 
 
     void Awake()
     {   
+        index = 0;
+        count = 0;
         // Initialize Variables.
         allPalettes = new List<List<Color>>();
         currentPalette = new Color[5];
@@ -93,7 +95,7 @@ public class ColorManager : MonoBehaviour
 
     void SetPaletteQueue ()
     {   
-        for (int j = 0; j < 20; j++)
+        for (int j = 0; j < 5; j++)
         {
             UpdatePaletteQueue();
         }

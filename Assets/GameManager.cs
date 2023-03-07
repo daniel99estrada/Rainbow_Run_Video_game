@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
 public class GameManager : MonoBehaviour
-{      
+{   
     public static bool gameOver;
     public static bool gameInProgress; 
     public int initialSpeed;
     public bool startingGame;
-
+    
     void Awake()
     {
         obstManager.speed = 0;
@@ -20,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
+    {   
         UIManager.SetStartScreenUI();
         Invoke("StartGame", 0.3f);
     }
@@ -42,13 +43,12 @@ public class GameManager : MonoBehaviour
             }
         }
 
-
         if (gameOver)
         {   
             if (Input.GetKeyDown(KeyCode.DownArrow) || SwipeManager.tap)
             {   
-                ColorManager.ClearQueues();
                 //reset Game
+                ColorManager.ClearQueues();
                 SceneManager.LoadScene("Game");
             }
         }
@@ -64,7 +64,6 @@ public class GameManager : MonoBehaviour
         UIManager.SetGameOverUI();
         gameOver = true;
         obstManager.speed = 0;
-
     } 
 
 }

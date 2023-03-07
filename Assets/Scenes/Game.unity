@@ -359,6 +359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialSpeed: 16
+  startingGame: 0
 --- !u!4 &198579210
 Transform:
   m_ObjectHideFlags: 0

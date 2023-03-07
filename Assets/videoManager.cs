@@ -13,7 +13,8 @@ public class videoManager : MonoBehaviour
     }
 
     void LoadScene(VideoPlayer vp)
-    {
+    {   
+        videoPlayer.Stop();
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneToLoad);
     }
 }
